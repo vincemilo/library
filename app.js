@@ -34,3 +34,8 @@ for (let i = 0; i < books.length; i++) {
     li.appendChild(document.createTextNode(book));
     ul.appendChild(li);
 }
+
+const bookForm = document.querySelector('.book-form');
+const toggle = () => (bookForm.style.display === 'none' ? bookForm.style.display = 'block' : bookForm.style.display = 'none');
+const newBook = document.querySelector('.new-book');
+newBook.addEventListener('click', toggle)
