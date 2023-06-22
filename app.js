@@ -17,7 +17,7 @@ function addBookToLibrary(book){
 };
 
 const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 295, true);
-const bloodMeridian = new Book("Blood Meridian", "Cormac McCarthy", 500, false);
+const bloodMeridian = new Book("Blood Meridian", "Cormac McCarthy", 368, false);
 
 addBookToLibrary(theHobbit);
 addBookToLibrary(bloodMeridian);
@@ -38,4 +38,19 @@ for (let i = 0; i < books.length; i++) {
 const bookForm = document.querySelector('.book-form');
 const toggle = () => (bookForm.style.display === 'none' ? bookForm.style.display = 'block' : bookForm.style.display = 'none');
 const newBook = document.querySelector('.new-book');
-newBook.addEventListener('click', toggle)
+newBook.addEventListener('click', toggle, false);
+const button = document.querySelector('.button');
+const submit = function(event){
+    const data = new FormData(bookForm);
+    const book = new Book;
+    for (const entry of data) {
+      book[entry[0]] = entry[1];
+    }
+    addBookToLibrary(book);
+    let li = document.createElement('li');
+    li.appendChild(document.createTextNode(book.info()));
+    ul.appendChild(li);
+    toggle();
+    event.preventDefault();
+};
+button.addEventListener('click', submit, false);
