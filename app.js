@@ -40,6 +40,7 @@ const toggle = () => (bookForm.style.display === 'none' ? bookForm.style.display
 const newBook = document.querySelector('.new-book');
 newBook.addEventListener('click', toggle, false);
 const button = document.querySelector('.button');
+
 const submit = function(event){
     const data = new FormData(bookForm);
     const book = new Book;
@@ -49,8 +50,18 @@ const submit = function(event){
     addBookToLibrary(book);
     let li = document.createElement('li');
     li.appendChild(document.createTextNode(book.info()));
+    let remove_btn = document.createElement('button');
+    remove_btn.textContent = 'Remove';
+    remove_btn.dataset.id = myLibrary.length - 1;
+    li.appendChild(remove_btn);
     ul.appendChild(li);
     toggle();
     event.preventDefault();
 };
 button.addEventListener('click', submit, false);
+
+//add functionality to remove button
+ul.addEventListener('click', (e) => {
+    e.target.parentNode.remove();
+    myLibrary.splice(e.target.dataset.id, 1);
+});
