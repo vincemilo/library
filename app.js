@@ -8,7 +8,7 @@ function Book(title, author, pages, read) {
 };
 
 Book.prototype.info = function() {
-    let readStatus = () => this.read === false ? "not read yet" : "read"; 
+    let readStatus = () => this.read === "false" ? "not read yet" : "read"; 
     return `${this.title} by ${this.author}, ${this.pages} pages, ${readStatus()}`;
 };
 
@@ -16,8 +16,8 @@ function addBookToLibrary(book){
     myLibrary.push(book);
 };
 
-const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 295, true);
-const bloodMeridian = new Book("Blood Meridian", "Cormac McCarthy", 368, false);
+const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 295, "true");
+const bloodMeridian = new Book("Blood Meridian", "Cormac McCarthy", 368, "false");
 
 addBookToLibrary(theHobbit);
 addBookToLibrary(bloodMeridian);
@@ -52,7 +52,8 @@ const submit = function(event){
     li.appendChild(document.createTextNode(book.info()));
     let remove_btn = document.createElement('button');
     remove_btn.textContent = 'Remove';
-    remove_btn.dataset.id = myLibrary.length - 1;
+    remove_btn.dataset.remove = myLibrary.length - 1;
+    li.appendChild(readBtn);
     li.appendChild(remove_btn);
     ul.appendChild(li);
     toggle();
@@ -62,6 +63,25 @@ button.addEventListener('click', submit, false);
 
 //add functionality to remove button
 ul.addEventListener('click', (e) => {
-    e.target.parentNode.remove();
-    myLibrary.splice(e.target.dataset.id, 1);
+    // check if read button
+    if ((Object.keys(e.target.dataset)[0]) === 'read'){
+        // console.log(e.target);
+        toggleRead(e.target);
+    } else {
+        // the remove button
+        let confirm = window.confirm('Are you sure?');
+        if (confirm === true){
+        e.target.parentNode.remove();
+        myLibrary.splice(e.target.dataset.id, 1);
+        }
+    }
 });
+
+let readBtn = document.createElement('button');
+readBtn.textContent = 'Read';
+readBtn.dataset.read = 2;
+
+function toggleRead(button){
+    button.textContent === 'Read' ? button.textContent = 'Not Yet Read' : button.textContent = 'Read';
+    myLibrary[button.dataset.read].read === 'true' ? myLibrary[button.dataset.read].read = 'false' : myLibrary[button.dataset.read].read = 'true';
+}
