@@ -8,19 +8,19 @@ function Book(title, author, pages, read) {
 };
 
 Book.prototype.info = function() {
-    let readStatus = () => this.read === "false" ? "not read yet" : "read"; 
-    return `${this.title} by ${this.author}, ${this.pages} pages, ${readStatus()}`;
+    //let readStatus = () => this.read === "false" ? "not read yet" : "read"; 
+    return `${this.title} by ${this.author}, ${this.pages} pages`;//, ${readStatus()}`;
 };
 
 function addBookToLibrary(book){
     myLibrary.push(book);
 };
 
-const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 295, "true");
-const bloodMeridian = new Book("Blood Meridian", "Cormac McCarthy", 368, "false");
+// const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 295, "true");
+// const bloodMeridian = new Book("Blood Meridian", "Cormac McCarthy", 368, "false");
 
-addBookToLibrary(theHobbit);
-addBookToLibrary(bloodMeridian);
+// addBookToLibrary(theHobbit);
+// addBookToLibrary(bloodMeridian);
 
 // console.table(myLibrary);
 
@@ -53,6 +53,9 @@ const submit = function(event){
     let remove_btn = document.createElement('button');
     remove_btn.textContent = 'Remove';
     remove_btn.dataset.remove = myLibrary.length - 1;
+    let readBtn = document.createElement('button');
+    readBtn.textContent = bookRead(book);
+    readBtn.dataset.read = myLibrary.length - 1;
     li.appendChild(readBtn);
     li.appendChild(remove_btn);
     ul.appendChild(li);
@@ -67,7 +70,7 @@ ul.addEventListener('click', (e) => {
     if ((Object.keys(e.target.dataset)[0]) === 'read'){
         // console.log(e.target);
         toggleRead(e.target);
-    } else {
+    } else if ((Object.keys(e.target.dataset)[0]) === 'remove') {
         // the remove button
         let confirm = window.confirm('Are you sure?');
         if (confirm === true){
@@ -77,9 +80,9 @@ ul.addEventListener('click', (e) => {
     }
 });
 
-let readBtn = document.createElement('button');
-readBtn.textContent = 'Read';
-readBtn.dataset.read = 2;
+function bookRead(book){
+    return book.read === 'false' ? 'Not read yet' : 'Read';
+}
 
 function toggleRead(button){
     button.textContent === 'Read' ? button.textContent = 'Not Yet Read' : button.textContent = 'Read';

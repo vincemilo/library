@@ -1,0 +1,19 @@
+.new-book {
+    background-color: rgb(12, 137, 175);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+    display: inline-block;
+    border-radius: 4px;
+}
+
+.book-form{
+    padding: 8px;
+}
+
+.book-form div {
+    padding: 4px;
+}
