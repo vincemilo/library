@@ -1,15 +1,17 @@
 let myLibrary = [];
 
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-};
+class Book {
+    constructor(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;        
+    };
 
-Book.prototype.info = function() {
-    //let readStatus = () => this.read === "false" ? "not read yet" : "read"; 
-    return `${this.title} by ${this.author}, ${this.pages} pages`;//, ${readStatus()}`;
+    get info() {
+        //let readStatus = () => this.read === "false" ? "not read yet" : "read"; 
+        return `${this.title} by ${this.author}, ${this.pages} pages`;//, ${readStatus()}`;
+    };
 };
 
 function addBookToLibrary(book){
@@ -26,7 +28,7 @@ function addBookToLibrary(book){
 
 const library = document.querySelector('.library');
 const ul = document.querySelector('.ul');
-let books = myLibrary.map(book => book.info());
+let books = myLibrary.map(book => book.info);
 // console.log(books);
 for (let i = 0; i < books.length; i++) {
     let book = books[i];
@@ -49,7 +51,7 @@ const submit = function(event){
     }
     addBookToLibrary(book);
     let li = document.createElement('li');
-    li.appendChild(document.createTextNode(book.info()));
+    li.appendChild(document.createTextNode(book.info));
     let remove_btn = document.createElement('button');
     remove_btn.textContent = 'Remove';
     remove_btn.dataset.remove = myLibrary.length - 1;
